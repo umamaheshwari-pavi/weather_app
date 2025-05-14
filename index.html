@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="Weather.css">
+</head>
+<body>
+    
+    <div class="card">
+
+        <div class="search">
+            <input type="text" placeholder="Enter city name">
+            <button onclick="trigger()"><img src="file:///C:/Users/windows/OneDrive/Desktop/HTML/JAVASCRIPT/TASKS/Assets/Weather_assets/search.png" alt="search"></button>
+
+        </div>
+
+        <div class="Weather">
+
+            <img src="file:///C:/Users/windows/OneDrive/Desktop/HTML/JAVASCRIPT/TASKS/Assets/Weather_assets/mist.png" alt="rain" class="Weather-icon">
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">New York</h2>
+
+            <div class="details">
+                <div class="col">
+                    <img src="file:///C:/Users/windows/OneDrive/Desktop/HTML/JAVASCRIPT/TASKS/Assets/Weather_assets/humidity.png" alt="humidity">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="file:///C:/Users/windows/OneDrive/Desktop/HTML/JAVASCRIPT/TASKS/Assets/Weather_assets/wind.png" alt="wind">
+                    <div>
+                        <p class="wind">20 Km/h</p>
+                        <p>Wind Speed </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script>
+
+        const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+        const apikey = "fe1b272a82cce77c895264b67d4581c8"
+        
+        const searchbox = document.querySelector(".search input"); 
+        
+        
+         // button search function     
+         function trigger(){
+            checkWeather(searchbox.value)
+        }
+
+        // function 
+        async function checkWeather(city) {
+               const response = await fetch(apiurl + city + `&appid=${apikey}`);   // fetch data from  server 
+
+               console.log(response);  // just for ref                      both jsona and fetch returns
+
+               var data = await response.json()                                   // convert the data fetched from server into json format
+        
+                console.log(data);  // just for ref
+
+                document.querySelector('.city').innerHTML= data.name;
+                document.querySelector('.temp').innerHTML = data.main.temp + "°C";        // Math.round()
+                document.querySelector('.humidity').innerHTML= data.main.humidity + "%";
+                document.querySelector('.wind').innerHTML=data.wind.speed + " Km/h";
+
+            }
+    </script>
+
+
+</body>
+</html>
